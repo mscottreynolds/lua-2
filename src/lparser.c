@@ -1566,10 +1566,19 @@ static void fornum (LexState *ls, TString *varname, int line) {
   new_localvar(ls, varname);
   checknext(ls, '=');
   exp1(ls);  /* initial value */
-  checknext(ls, ',');
-  exp1(ls);  /* limit */
+  if (testnext(ls, ',')) {
+    exp1(ls);  /* limit */
+  }
+  else {
+    checknext(ls, TK_TO);
+    exp1(ls);
+  }
+//  checknext(ls, ',');
   if (testnext(ls, ','))
     exp1(ls);  /* optional step */
+  else if (testnext(ls, TK_BY)) {
+    exp1(ls);  /* optional step */
+  }
   else {  /* default step = 1 */
     luaK_int(fs, fs->freereg, 1);
     luaK_reserveregs(fs, 1);
