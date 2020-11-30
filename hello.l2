@@ -1,0 +1,29 @@
+#!/usr/bin/env lua-2
+
+print(package.path)
+package.path = package.path .. ";./lib/?.lua;./lib/?/init.lua;./?.l2;./?/init.l2;./lib/?.l2;./lib/?/init.l2"
+print(package.path)
+
+strict = require("strict")
+cpi = require("msr.ComputePi")
+msr = require("msr.Io")
+write = msr.write
+writeln = msr.writeln
+
+writeln("-----------------------")
+--msr.dump(4, _G)
+writeln("-----------------------")
+
+msr.debug("Hello Lua-2.")
+
+local d = os.date("*t")
+msr.write("d = ", d, "\n")
+msr.print("d = ", d, "\n")
+--msr.print("_G = ", _G, "\n")
+
+msr.dump(1, getmetatable("string"))
+local a = {}
+msr.print("a=", a, "\n")
+for x = 1 to 5 by 2 do
+	print(x)
+end
