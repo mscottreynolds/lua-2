@@ -1,35 +1,29 @@
-#!/usr/bin/env lua-2
--- Countdown timer.  
--- Display the number of seconds counting down to 0
--- in a sinewave pattern.
--- M. Scott Reynolds, 2020.11.17
+#!/usr/bin/env lua
 
-socket = require 'socket'
+print(package.path)
+package.path = package.path .. ";./lib/?.lua;./lib/?/init.lua;./?.l2;./?/init.l2;./lib/?.l2;./lib/?/init.l2"
+print(package.path)
 
-function sleep(sec)
-	socket.sleep(sec)
-end
+strict = require("strict")
+cpi = require("msr.ComputePi")
+msr = require("msr.Io")
+write = msr.write
+writeln = msr.writeln
 
--- Build a buffer of spaces.
-local width = 30
-local spaces = string.rep(" ", 30*2)
+writeln("-----------------------")
+--msr.dump(4, _G)
+writeln("-----------------------")
 
-do
-	local count = tonumber(arg[1])
-	if count == nil then
-		print("Usage: countdown n [seconds_delay]")
-		print("", "n = number of seconds to countdown from. (roughly)")
-	else
-		local delay = tonumber(arg[2]) or 1
-		local n = 0.0
-		local a = 0
-		for i = count to 1 by -1 do
-			a = math.modf((width + (width-1) * math.sin(n)))
-			print(spaces:sub(1, a) .. tostring(i))
-			n = n + 0.25
-			sleep(delay)
-		end
-		a = math.modf((width + (width-1) * math.sin(n)))
-		print(spaces:sub(1, a) .. "0")
-	end
+msr.debug("Hello Lua-2.")
+
+local d = os.date("*t")
+msr.write("d = ", d, "\n")
+msr.print("d = ", d, "\n")
+--msr.print("_G = ", _G, "\n")
+
+msr.dump(1, getmetatable("string"))
+local a = {}
+msr.print("a=", a, "\n")
+for x = 1 to 5 by 2 do
+	print(x)
 end
